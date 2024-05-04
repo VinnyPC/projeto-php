@@ -4,7 +4,7 @@ function findUserDb($conn, $id) {
     $id = mysqli_real_escape_string($conn, $id);
 	$user;
 
-	$sql = "SELECT * FROM usuarios  WHERE id = ?";
+	$sql = "SELECT * FROM users  WHERE id = ?";
 	$stmt = mysqli_stmt_init($conn);
 
 	if(!mysqli_stmt_prepare($stmt, $sql))
@@ -19,19 +19,19 @@ function findUserDb($conn, $id) {
 	return $user;
 }
 
-function createUserDb($conn, $nome, $email, $telefone) {
-	$nome = mysqli_real_escape_string($conn, $nome);
+function createUserDb($conn, $name, $email, $phone) {
+	$name = mysqli_real_escape_string($conn, $name);
 	$email = mysqli_real_escape_string($conn,  $email);
-	$telefone = mysqli_real_escape_string($conn,  $telefone);
+	$phone = mysqli_real_escape_string($conn,  $phone);
 
-	if($nome && $email && $telefone) {
-		$sql = "INSERT INTO usuarios (nome, email, telefone) VALUES (?, ?, ?)";
+	if($name && $email && $phone) {
+		$sql = "INSERT INTO users (name, email, phone) VALUES (?, ?, ?)";
 		$stmt = mysqli_stmt_init($conn);
 
 		if(!mysqli_stmt_prepare($stmt, $sql)) 
 			exit('SQL error');
 		
-		mysqli_stmt_bind_param($stmt, 'sss', $nome, $email, $telefone);
+		mysqli_stmt_bind_param($stmt, 'sss', $name, $email, $phone);
 		mysqli_stmt_execute($stmt);
 		mysqli_close($conn);
 		return true;
@@ -39,29 +39,29 @@ function createUserDb($conn, $nome, $email, $telefone) {
 }
 
 function readUserDb($conn) {
-    $usuarios = [];
+    $users = [];
 
-	$sql = "SELECT * FROM usuarios";
+	$sql = "SELECT * FROM users";
 	$result = mysqli_query($conn, $sql);
 
 	$result_check = mysqli_num_rows($result);
 	
 	if($result_check > 0)
-		$usuarios = mysqli_fetch_all($result, MYSQLI_ASSOC);
+		$users = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
 	mysqli_close($conn);
-	return $usuarios;
+	return $users;
 }
 
-function updateUserDb($conn, $id, $nome, $email, $telefone) {
-    if($id && $nome && $email && $telefone) {
-		$sql = "UPDATE usuarios SET nome = ?, email = ?, telefone = ? WHERE id = ?";
+function updateUserDb($conn, $id, $name, $email, $phone) {
+    if($id && $name && $email && $phone) {
+		$sql = "UPDATE users SET name = ?, email = ?, phone = ? WHERE id = ?";
 		$stmt = mysqli_stmt_init($conn);
 
 		if(!mysqli_stmt_prepare($stmt, $sql))
 			exit('SQL error');
 
-		mysqli_stmt_bind_param($stmt, 'sssi', $nome, $email, $telefone, $id);
+		mysqli_stmt_bind_param($stmt, 'sssi', $name, $email, $phone, $id);
 		mysqli_stmt_execute($stmt);
 		mysqli_close($conn);
 		return true;
@@ -72,7 +72,7 @@ function deleteUserDb($conn, $id) {
     $id = mysqli_real_escape_string($conn, $id);
 
 	if($id) {
-		$sql = "DELETE FROM usuarios WHERE id = ?";
+		$sql = "DELETE FROM users WHERE id = ?";
 		$stmt = mysqli_stmt_init($conn);
 
 		if(!mysqli_stmt_prepare($stmt, $sql))

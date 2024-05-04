@@ -10,14 +10,14 @@ function readUserAction($conn) {
 	return readUserDb($conn);
 }
 
-function createUserAction($conn, $nome, $email, $telefone) {
-	$createUserDb = createUserDb($conn, $nome, $email, $telefone);
+function createUserAction($conn, $name, $email, $phone) {
+	$createUserDb = createUserDb($conn, $name, $email, $phone);
 	$message = $createUserDb == 1 ? 'success-create' : 'error-create';
 	return header("Location: ./read.php?message=$message");
 }
 
-function updateUserAction($conn, $id, $nome, $email, $telefone) {
-	$updateUserDb = updateUserDb($conn, $id, $nome, $email, $telefone);
+function updateUserAction($conn, $id, $name, $email, $phone) {
+	$updateUserDb = updateUserDb($conn, $id, $name, $email, $phone);
 	$message = $updateUserDb == 1 ? 'success-update' : 'error-update';
 	return header("Location: ./read.php?message=$message");
 }
